@@ -74,7 +74,7 @@
     "@strapi/icons": "^2.0.0-rc.24",
     "qrcode.react": "^4.2.0",
     "react-intl": "^7.1.11",
-    "zod": "^3.25.51"
+    "zod": "^3.25.62"
   },
   "devDependencies": {
     "@eslint/js": "^9.28.0",
@@ -93,7 +93,7 @@
     "react-router-dom": "^6",
     "styled-components": "^6",
     "typescript": "^5.8.3",
-    "typescript-eslint": "^8.33.1"
+    "typescript-eslint": "^8.34.0"
   },
   "peerDependencies": {
     "@strapi/sdk-plugin": "^5.3.2",
