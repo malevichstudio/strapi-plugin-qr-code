@@ -1,1 +1,3 @@
-export const PLUGIN_ID = 'qr-code'
+import packageJson from '../../package.json'
+
+export const PLUGIN_ID = packageJson.strapi.name

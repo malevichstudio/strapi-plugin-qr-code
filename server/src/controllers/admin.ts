@@ -1,13 +1,14 @@
 import type { Core, UID } from '@strapi/strapi'
 import type { Config } from 'src/config'
 import type { Context } from 'koa'
+import { PLUGIN_ID } from '../pluginId'
 
 const controller = ({ strapi }: { strapi: Core.Strapi }) => ({
   async getQRCodeValue(ctx: Context): Promise<{computedValue: string}> {
     const { uid, status, documentId } = ctx.request.query as { uid: UID.ContentType, status: 'draft' | 'published', documentId: string }
     
     // Get config and find right content-type with uid
-    const contentTypes: Config['contentTypes'] = strapi.plugin('qr-code').config('contentTypes')
+    const contentTypes: Config['contentTypes'] = strapi.plugin(PLUGIN_ID).config('contentTypes')
     const contentType = contentTypes.find(content => content.uid === uid)
 
     const result: {
