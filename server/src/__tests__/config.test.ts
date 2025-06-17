@@ -81,4 +81,21 @@ describe('QR Code Plugin Config', () => {
 
     expect(() => config.validator(invalidConfig)).toThrow()
   })
+
+  it('should reject duplicate content type UIDs', () => {
+    const invalidConfig = {
+      contentTypes: [
+        {
+          uid: 'api::page.page',
+          computeValue: (_uid: string, _status: 'draft' | 'published', _document: unknown) => 'https://example.com',
+        },
+        {
+          uid: 'api::page.page',
+          computeValue: (_uid: string, _status: 'draft' | 'published', _document: unknown) => 'https://example.com',
+        },
+      ],
+    }
+
+    expect(() => config.validator(invalidConfig)).toThrow('Duplicate content type UIDs are not allowed.')
+  })
 }) 

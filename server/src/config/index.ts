@@ -15,7 +15,12 @@ const configSchema = z.object({
       z.union([z.literal('draft'), z.literal('published')]),
       schemaDocument,
     ).returns(z.union([z.promise(z.string()), z.string()])),
-  }).array(),
+  }).array().refine((contentTypes) => {
+    const uids = contentTypes.map((contentType) => contentType.uid)
+    return new Set(uids).size === uids.length
+  }, {
+    message: 'Duplicate content type UIDs are not allowed.',
+  }),
 })
 
 export type Config = z.infer<typeof configSchema>
