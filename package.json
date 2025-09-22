@@ -6,7 +6,7 @@
     "displayName": "QR-Code",
     "description": "A Strapi plugin to display generated QR Codes on the admin panel's ContentTypes."
   },
-  "name": "strapi-plugin-qr-code",
+  "name": "@malevich-studio/strapi-plugin-qr-code",
   "description": "A Strapi plugin to display generated QR Codes on the admin panel's ContentTypes.",
   "keywords": [
     "strapi",
