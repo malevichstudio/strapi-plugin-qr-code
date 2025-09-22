@@ -1,8 +1,7 @@
 import type { PanelComponent } from '@strapi/content-manager/strapi-admin'
 import { QRCodeSVG } from 'qrcode.react'
 import { useEffect, useRef, useState } from 'react'
-import { Button } from '@strapi/design-system'
-import { Flex } from '@strapi/design-system/Flex'
+import { Button, Flex } from '@strapi/design-system'
 import { Download } from '@strapi/icons'
 import { useFetchClient } from '@strapi/strapi/admin'
 
