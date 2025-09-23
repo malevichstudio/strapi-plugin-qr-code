@@ -6,6 +6,7 @@ import { Download } from '@strapi/icons'
 import { useFetchClient } from '@strapi/strapi/admin'
 
 import { PLUGIN_ID } from '../pluginId'
+import { qrToEPS } from '../utils/qr-to-eps'
 
 const QRCodePanel: PanelComponent = (props) => {
   const { activeTab, model, documentId } = props
@@ -75,6 +76,19 @@ const QRCodePanel: PanelComponent = (props) => {
     URL.revokeObjectURL(url)
   }
 
+  async function downloadAsEps(value: string) {
+    const eps = await qrToEPS(value, { ecLevel: 'M', marginModules: 1, ptPerModule: 10 })
+    const blob = new Blob([eps], { type: 'application/postscript;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = 'qr-code.eps'
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+  }
+
   useEffect(() => {
     if (model && documentId && activeTab) {
       get<{computedValue: string}>(`/${PLUGIN_ID}/value?uid=${model}&status=${activeTab}&documentId=${documentId}`)
@@ -98,6 +112,8 @@ const QRCodePanel: PanelComponent = (props) => {
         <QRCodeSVG
           ref={svgRef as any}
           value={uri}
+          level="M"
+          size={1024}
           title={uri}
           marginSize={1}
           style={{ width: '100%', height: 'auto', objectFit: 'contain' }}
@@ -108,6 +124,9 @@ const QRCodePanel: PanelComponent = (props) => {
           </Button>
           <Button startIcon={<Download />} onClick={downloadAsPng}>
             Download PNG
+          </Button>
+          <Button startIcon={<Download />} onClick={() => downloadAsEps(uri)}>
+            Download EPS
           </Button>
         </Flex>
       </div>
