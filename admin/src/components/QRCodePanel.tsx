@@ -1,8 +1,8 @@
 import type { PanelComponent } from '@strapi/content-manager/strapi-admin'
 import { QRCodeSVG } from 'qrcode.react'
 import { useEffect, useRef, useState } from 'react'
-import { Button, Flex } from '@strapi/design-system'
-import { Download } from '@strapi/icons'
+import { Button, Flex, Typography, Link } from '@strapi/design-system'
+import { Download, ExternalLink } from '@strapi/icons'
 import { useFetchClient } from '@strapi/strapi/admin'
 
 import { PLUGIN_ID } from '../pluginId'
@@ -110,7 +110,7 @@ const QRCodePanel: PanelComponent = (props) => {
     content: (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
         <QRCodeSVG
-          ref={svgRef as any}
+          ref={svgRef}
           value={uri}
           level="M"
           size={1024}
@@ -118,16 +118,35 @@ const QRCodePanel: PanelComponent = (props) => {
           marginSize={1}
           style={{ width: '100%', height: 'auto', objectFit: 'contain' }}
         />
-        <Flex gap={2} wrap="wrap">
-          <Button startIcon={<Download />} onClick={downloadAsSvg}>
-            Download SVG
-          </Button>
-          <Button startIcon={<Download />} onClick={downloadAsPng}>
-            Download PNG
-          </Button>
-          <Button startIcon={<Download />} onClick={() => downloadAsEps(uri)}>
-            Download EPS
-          </Button>
+        <Flex direction="column" gap={3}>
+          <Flex direction="column" gap={2}>
+            <Typography variant="pi" fontWeight="bold" textColor="neutral800">
+              URL:
+            </Typography>
+            <Link 
+              href={uri} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              startIcon={<ExternalLink />}
+              style={{ 
+                wordBreak: 'break-all',
+                textDecoration: 'none',
+              }}
+            >
+              {uri}
+            </Link>
+          </Flex>
+          <Flex gap={2} wrap="wrap">
+            <Button startIcon={<Download />} onClick={downloadAsSvg}>
+              Download SVG
+            </Button>
+            <Button startIcon={<Download />} onClick={downloadAsPng}>
+              Download PNG
+            </Button>
+            <Button startIcon={<Download />} onClick={() => downloadAsEps(uri)}>
+              Download EPS
+            </Button>
+          </Flex>
         </Flex>
       </div>
     ),
