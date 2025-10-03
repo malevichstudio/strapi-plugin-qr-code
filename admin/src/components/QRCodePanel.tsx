@@ -43,23 +43,15 @@ const QRCodePanel: PanelComponent = (props) => {
     const context = canvas.getContext('2d')
     if (!context) return
 
-    const viewBox = svgRef.current.getAttribute('viewBox')
-    let width = 1024
-    let height = 1024
-    if (viewBox) {
-      const parts = viewBox.split(' ').map(Number)
-      if (parts.length === 4) {
-        width = Math.max(1, Math.round(parts[2]))
-        height = Math.max(1, Math.round(parts[3]))
-      }
-    }
-    canvas.width = width
-    canvas.height = height
+    // Render PNG at a larger, fixed pixel size for better visibility
+    const exportSize = 1024
+    canvas.width = exportSize
+    canvas.height = exportSize
 
     await new Promise<void>((resolve, reject) => {
       image.onload = () => {
-        context.clearRect(0, 0, width, height)
-        context.drawImage(image, 0, 0, width, height)
+        context.clearRect(0, 0, exportSize, exportSize)
+        context.drawImage(image, 0, 0, exportSize, exportSize)
         resolve()
       }
       image.onerror = () => reject(new Error('Failed to render SVG to image'))
